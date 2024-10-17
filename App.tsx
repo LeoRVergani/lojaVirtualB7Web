@@ -1,20 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar, Image, FlatList } from 'react-native';
+import { list } from './data';
+import { ProductItem} from './components/product-item'
+import { Products } from './types/Products';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Image 
+        source={require('./assets/hero.jpg')}
+        resizeMode='cover'
+        style={styles.hero}
+      />
+      <View style={styles.area}>
+        <Text style={styles.h1}>Produtos</Text>
+      </View>
+      <FlatList 
+        data={list}
+        renderItem={({ item }: { item: Products}) => (<ProductItem product={item} />)}
+        keyExtractor={item => item.id.toString()}
+      />
+
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: StatusBar.currentHeight || 0
   },
+  hero: {
+    width: '100%',
+    height: 128
+  },
+  area: {
+    padding: 10
+  },
+  h1: {
+    fontSize: 24,
+    marginBottom: 10
+  }
 });
